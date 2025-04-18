@@ -4,6 +4,8 @@ let usuarios: { name: string; email: string; password: string }[] = [];
 // Função para cadastrar novos usuários
 const cadastro = (name: string, email: string, password: string, confirmarSenha: string) => {
     try {
+        const info = document.getElementById('info') as HTMLDivElement
+
         // Verifica se a senha e a confirmação são iguais
         if (password !== confirmarSenha) {
             console.log('As senhas não coincidem!');
@@ -28,10 +30,13 @@ const cadastro = (name: string, email: string, password: string, confirmarSenha:
 
         // Exibe uma mensagem de sucesso no console
         console.log('Usuário cadastrado com sucesso:', usuarios);
+        info.innerHTML = 'Usuário cadastrado com sucesso!'
 
     } catch (error) {
         // Exibe erro no console, caso algo dê errado no processo
+        const info = document.getElementById('info') as HTMLDivElement
         console.log('Erro ao cadastrar usuário: ' + error);
+        info.innerHTML = 'Erro ao cadastrar Usuário'
     }
 }
 

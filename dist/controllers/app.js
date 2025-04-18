@@ -4,6 +4,7 @@ let usuarios = [];
 // Função para cadastrar novos usuários
 const cadastro = (name, email, password, confirmarSenha) => {
     try {
+        const info = document.getElementById('info');
         // Verifica se a senha e a confirmação são iguais
         if (password !== confirmarSenha) {
             console.log('As senhas não coincidem!');
@@ -15,7 +16,7 @@ const cadastro = (name, email, password, confirmarSenha) => {
             email: email,
             password: password,
         };
-        // Recupera os usuários já cadastrados do localStorage, ou cria um array vazio caso não haja nenhum
+        //Busca usuários cadastrados no LocalStore, se não achar devolve um array vazio
         let usuarios = JSON.parse(localStorage.getItem('usuarios') || '[]');
         // Adiciona o novo usuário ao array
         usuarios.push(usuario);
@@ -23,18 +24,24 @@ const cadastro = (name, email, password, confirmarSenha) => {
         localStorage.setItem('usuarios', JSON.stringify(usuarios));
         // Exibe uma mensagem de sucesso no console
         console.log('Usuário cadastrado com sucesso:', usuarios);
+        info.innerHTML = 'Usuário cadastrado com sucesso!';
     }
     catch (error) {
         // Exibe erro no console, caso algo dê errado no processo
+        const info = document.getElementById('info');
         console.log('Erro ao cadastrar usuário: ' + error);
+        info.innerHTML = 'Erro ao cadastrar Usuário';
     }
 };
 // Função para realizar login
 const login = (email, password) => {
     try {
         const info = document.getElementById('info');
+        //Busca usuários no localStore
         let usuarios = JSON.parse(localStorage.getItem('usuarios') || '[]');
+        //Cria uma variavel para verificar se o email e senha foram os mesmos do digitado
         const usuario = usuarios.find(user => user.email === email && user.password === password);
+        //caso seja, redireciona para a página de Home
         if (usuario) {
             info.innerHTML = ''; // Limpa mensagens anteriores
             console.log('Login efetuado com sucesso!');
