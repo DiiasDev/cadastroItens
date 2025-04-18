@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "outDir": "./dist",        // Onde o código compilado será salvo
+    "rootDir": "./src",        // Onde estão os arquivos .ts
+    "strict": true,            // Habilita as checagens de tipo rigorosas
+    "esModuleInterop": true    // Compatibilidade com imports de módulos ES6
+  },
+  "include": ["src/**/*.ts"],    // Incluir todos os arquivos .ts da pasta src
+  "exclude": ["node_modules"]    // Excluir node_modules
+}
