@@ -11,6 +11,7 @@
 <body>
     <div class="container">
         <div class="form">
+            <a href="./home.html"><button id="btnHome">x</button></a>
             <h1>Cadastro de Item</h1>
             <form id="formItem">
                 <label for="name">Nome</label>
@@ -22,18 +23,19 @@
                 <label for="value">Valor</label>
                 <input type="text" id="value">
 
-                <label for="number">Quantidade</label>
-                <input type="text" id="number">
+                <label for="quantidade">Quantidade</label>
+                <input type="text" id="quantidade">
 
                 <label for="img">Imagem</label>
                 <input type="file" id="img" accept="image/*">
 
-                <button type="submit" id="btn">Entrar</button>
-
+                <button type="submit" id="btn">Cadastrar</button>
             </form>
         </div>
-        <div id="info" style="color: red; margin-top: 10px;"></div>
+        <div id="info" style="margin-top: 30px;"></div>
     </div>
+
+    <script src="/dist/controllers/home.js"></script>
 </body>
 
 </html>
