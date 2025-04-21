@@ -1,8 +1,15 @@
 "use strict";
-const cadastrarItem = (nome, descricao, quantidade, valor, img) => {
+const gerarNovoId = () => {
+    const items = JSON.parse(localStorage.getItem('items') || '[]');
+    if (items.length === 0)
+        return 1;
+    const ids = items.map((item) => item.id);
+    return Math.max(...ids) + 1;
+};
+const cadastrarItem = (id, nome, descricao, quantidade, valor, img) => {
     try {
         const info = document.getElementById('info');
-        const item = { nome, descricao, quantidade, valor, img };
+        const item = { id, nome, descricao, quantidade, valor, img };
         // Carrega do localStorage
         const listaItems = JSON.parse(localStorage.getItem('items') || '[]');
         listaItems.push(item);
@@ -34,16 +41,35 @@ const exibeItems = () => {
         html += `
             <div class="item-card">
                 <h3>${item.nome}</h3>
-                <img src="${item.img}" alt="${item.nome}" width="100">
-                <p>${item.descricao}</p>
+                <img src="${item.img}" alt="${item.nome}" width="100" height="100">
+                <p>${item.descricao.substring(0, 30)}</p>
                 <p>Quantidade: ${item.quantidade}</p>
                 <p>Valor: R$ ${item.valor.toFixed(2)}</p>
+                <button class='delete-btn' data-id='${item.id}'>Excluir</button>
             </div>
         `;
     });
     lista_itens.innerHTML = html;
+    document.querySelectorAll('.delete-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const button = e.currentTarget;
+            const id = Number(button.dataset.id);
+            console.log("Removendo ID:", id); // Agora deve mostrar o número corretamente
+            removeItems(id);
+        });
+    });
 };
 document.addEventListener('DOMContentLoaded', exibeItems);
+const removeItems = (idParaRemover) => {
+    const items = JSON.parse(localStorage.getItem('items') || '[]');
+    // Encontra o índice do item com o ID correspondente
+    const index = items.findIndex((item) => item.id === idParaRemover);
+    if (index !== -1) {
+        items.splice(index, 1); // Remove o item do array
+    }
+    localStorage.setItem('items', JSON.stringify(items));
+    exibeItems(); // Atualiza a interface
+};
 document.addEventListener('DOMContentLoaded', () => {
     const formItem = document.getElementById('formItem');
     if (formItem) {
@@ -55,6 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const getValue = document.getElementById('value').value;
             const getQtd = document.getElementById('quantidade').value;
             const getImgInput = document.getElementById('img');
+            const getId = gerarNovoId();
             const file = (_a = getImgInput.files) === null || _a === void 0 ? void 0 : _a[0];
             if (!file) {
                 alert('Selecione uma imagem!');
@@ -64,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
             reader.onload = function (e) {
                 var _a;
                 const base64Img = (_a = e.target) === null || _a === void 0 ? void 0 : _a.result;
-                cadastrarItem(getName, getDescricao, Number(getQtd), Number(getValue), base64Img // Aqui vai a imagem em base64
+                cadastrarItem(getId, getName, getDescricao, Number(getQtd), Number(getValue), base64Img // Aqui vai a imagem em base64
                 );
                 exibeItems(); // Atualiza a exibição depois do cadastro
             };
