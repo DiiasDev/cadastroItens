@@ -55,7 +55,7 @@ const login = (email: string, password: string) => {
         if (usuario) {
             info.innerHTML = ''; // Limpa mensagens anteriores
             console.log('Login efetuado com sucesso!');
-            window.location.href = "https://cadastrodeitensdiiasdev.netlify.app/";
+            window.location.href = "./home.html";
         } else {
             info.innerHTML = 'Email ou senha incorretos!';
         }
